@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.BDDMockito.given;
@@ -35,6 +36,14 @@ public class ClothControllerTests {
         mockMvc.perform(post("/cloths")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"name\":\"T-Shirt\",\"size\":\"M\",\"color\":\"Red\"}"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldDeleteCloth() throws Exception {
+        Long clothId = 1L; // Assuming this ID exists in your database
+
+        mockMvc.perform(delete("/cloths/{id}", clothId))
                 .andExpect(status().isOk());
     }
 }
