@@ -74,7 +74,6 @@ public class Cloth {
         this.updatedTimestamp = updatedTimestamp;
     }
 
-    // You may want to include a toString() method for debugging purposes
     @Override
     public String toString() {
         return "Cloth{" +
