@@ -41,7 +41,7 @@ public class ClothControllerTests {
 
     @Test
     public void shouldDeleteCloth() throws Exception {
-        Long clothId = 1L; // Assuming this ID exists in your database
+        Long clothId = 1L;
 
         mockMvc.perform(delete("/cloths/{id}", clothId))
                 .andExpect(status().isOk());
