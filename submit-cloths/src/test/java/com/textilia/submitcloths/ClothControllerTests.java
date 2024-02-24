@@ -8,12 +8,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.BDDMockito.given;
 import com.textilia.submitcloths.entities.Cloth;
 import com.textilia.submitcloths.repositories.ClothRepository;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 @WebMvcTest(ClothController.class)
 public class ClothControllerTests {
@@ -45,5 +47,19 @@ public class ClothControllerTests {
 
         mockMvc.perform(delete("/cloths/{id}", clothId))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldUpdateCloth() throws Exception {
+        Long clothId = 1L; // Assuming this ID exists and is for updating
+        String updatedJson = "{\"name\":\"Updated T-Shirt\",\"size\":\"L\",\"color\":\"Blue\"}";
+
+        mockMvc.perform(put("/cloths/{id}", clothId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedJson))
+                .andExpect(status().isOk())
+                .andExpect((ResultMatcher) jsonPath("$.name", is("Updated T-Shirt")))
+                .andExpect((ResultMatcher) jsonPath("$.size", is("L")))
+                .andExpect((ResultMatcher) jsonPath("$.color", is("Blue")));
     }
 }
