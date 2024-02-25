@@ -3,8 +3,10 @@ package com.textilia.submitcloths.controllers;
 import com.textilia.submitcloths.entities.Cloth;
 import com.textilia.submitcloths.repositories.ClothRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class ClothController {
@@ -41,7 +43,7 @@ public class ClothController {
     @GetMapping("/cloths/{id}")
     public ResponseEntity<Cloth> getClothById(@PathVariable Long id) {
         Cloth cloth = clothRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cloth not found with id " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cloth not found with id " + id));
         return ResponseEntity.ok(cloth);
     }
 }
