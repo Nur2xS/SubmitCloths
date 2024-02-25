@@ -97,4 +97,17 @@ public class ClothControllerTests {
                 .andExpect(jsonPath("$.size").value("L"))
                 .andExpect(jsonPath("$.color").value("Blue"));
     }
+
+    @Test
+    public void getClothByIdShouldReturnCloth() throws Exception {
+        Long clothId = 1L;
+        given(clothRepository.findById(clothId)).willReturn(Optional.of(mockCloth));
+
+        mockMvc.perform(get("/cloths/{id}", clothId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(mockCloth.getId()))
+                .andExpect(jsonPath("$.name").value(mockCloth.getName()))
+                .andExpect(jsonPath("$.size").value(mockCloth.getSize()))
+                .andExpect(jsonPath("$.color").value(mockCloth.getColor()));
+    }
 }
