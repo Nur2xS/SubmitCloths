@@ -37,4 +37,11 @@ public class ClothController {
         final Cloth updatedCloth = clothRepository.save(cloth);
         return ResponseEntity.ok(updatedCloth);
     }
+
+    @GetMapping("/cloths/{id}")
+    public ResponseEntity<Cloth> getClothById(@PathVariable Long id) {
+        Cloth cloth = clothRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cloth not found with id " + id));
+        return ResponseEntity.ok(cloth);
+    }
 }
