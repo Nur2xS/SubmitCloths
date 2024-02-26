@@ -32,7 +32,9 @@ What you need to install the software and how to install them:
 
 A step-by-step series of examples that tell you how to get a development environment running.
 
-1. Clone the repository:
+> **Note**: Due to issues with a nested repository and challenges in resolving the problem, commits to this repository were cut off, so the latest changes may not be documented here. Therefore, a zip file with the complete project, including all changes, has been provided.
+
+1. Clone the repository (Note that the latest changes may not be reflected here):
     ```sh
     git clone https://github.com/your-username/cloth-submission-app.git
     ```
