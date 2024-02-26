@@ -19,6 +19,7 @@ public class ClothController {
     }
     @PostMapping("/cloths")
     public ResponseEntity<Cloth> createCloth(@RequestBody Cloth cloth) {
+        System.out.println("Received cloth: " + cloth);
         Cloth savedCloth = clothRepository.save(cloth);
         return ResponseEntity.ok(savedCloth);
     }

@@ -2,6 +2,7 @@ package com.textilia.submitcloths.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cloth")
@@ -21,11 +22,20 @@ public class Cloth {
     private String color;
 
     @Column(name = "created_timestamp")
-    private LocalDate createdTimestamp;
+    private LocalDateTime createdTimestamp;
 
     @Column(name = "updated_timestamp")
-    private LocalDate updatedTimestamp;
+    private LocalDateTime updatedTimestamp;
 
+    @PrePersist
+    protected void onCreate() {
+        createdTimestamp = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedTimestamp = LocalDateTime.now();
+    }
     public void setId(Long id) {
         this.id = id;
     }
@@ -58,20 +68,20 @@ public class Cloth {
         this.color = color;
     }
 
-    public LocalDate getCreatedTimestamp() {
+    public LocalDateTime getCreatedTimestamp() {
         return createdTimestamp;
     }
 
     public void setCreatedTimestamp(LocalDate createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
+        this.createdTimestamp = createdTimestamp.atStartOfDay();
     }
 
-    public LocalDate getUpdatedTimestamp() {
+    public LocalDateTime getUpdatedTimestamp() {
         return updatedTimestamp;
     }
 
     public void setUpdatedTimestamp(LocalDate updatedTimestamp) {
-        this.updatedTimestamp = updatedTimestamp;
+        this.updatedTimestamp = updatedTimestamp.atStartOfDay();
     }
 
     @Override
