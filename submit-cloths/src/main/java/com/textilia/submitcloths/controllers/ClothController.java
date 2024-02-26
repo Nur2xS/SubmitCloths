@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 public class ClothController {
 
@@ -46,5 +48,13 @@ public class ClothController {
         Cloth cloth = clothRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cloth not found with id " + id));
         return ResponseEntity.ok(cloth);
+    }
+    @GetMapping("/cloths")
+    public ResponseEntity<List<Cloth>> getAllCloths() {
+        List<Cloth> cloths = clothRepository.findAll();
+        if(cloths.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(cloths, HttpStatus.OK);
     }
 }

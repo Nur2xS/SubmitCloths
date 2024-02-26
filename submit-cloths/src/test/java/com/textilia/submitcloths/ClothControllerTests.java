@@ -115,7 +115,7 @@ public class ClothControllerTests {
     }
     @Test
     public void getAllClothsShouldReturnAllCloths() throws Exception {
-        List<Cloth> allCloths = Arrays.asList(mockCloth, new Cloth()); // Add more Cloth objects to the list as needed
+        List<Cloth> allCloths = Arrays.asList(mockCloth, new Cloth());
         given(clothRepository.findAll()).willReturn(allCloths);
 
         mockMvc.perform(get("/cloths"))
@@ -125,7 +125,6 @@ public class ClothControllerTests {
                 .andExpect(jsonPath("$[0].name").value(mockCloth.getName()))
                 .andExpect(jsonPath("$[0].size").value(mockCloth.getSize()))
                 .andExpect(jsonPath("$[0].color").value(mockCloth.getColor()));
-        // You can add more checks for the contents of the list if necessary
     }
 
 }
