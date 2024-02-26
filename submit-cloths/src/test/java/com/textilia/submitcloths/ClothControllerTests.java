@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -20,6 +21,8 @@ import com.textilia.submitcloths.entities.Cloth;
 import com.textilia.submitcloths.repositories.ClothRepository;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @WebMvcTest(ClothController.class)
@@ -110,4 +113,19 @@ public class ClothControllerTests {
                 .andExpect(jsonPath("$.size").value(mockCloth.getSize()))
                 .andExpect(jsonPath("$.color").value(mockCloth.getColor()));
     }
+    @Test
+    public void getAllClothsShouldReturnAllCloths() throws Exception {
+        List<Cloth> allCloths = Arrays.asList(mockCloth, new Cloth()); // Add more Cloth objects to the list as needed
+        given(clothRepository.findAll()).willReturn(allCloths);
+
+        mockMvc.perform(get("/cloths"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(allCloths.size())))
+                .andExpect(jsonPath("$[0].id").value(mockCloth.getId()))
+                .andExpect(jsonPath("$[0].name").value(mockCloth.getName()))
+                .andExpect(jsonPath("$[0].size").value(mockCloth.getSize()))
+                .andExpect(jsonPath("$[0].color").value(mockCloth.getColor()));
+        // You can add more checks for the contents of the list if necessary
+    }
+
 }
